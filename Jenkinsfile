@@ -4,20 +4,19 @@ pipeline {
     environment {
         DOCKER_IMAGE_BACKEND = 'alaakhedhiri/backend'
         DOCKER_IMAGE_FRONTEND = 'alaakhedhiri/frontend'
-        DOCKER_HUB_CREDENTIALS = credentials('docker') // Reference your Docker Hub credentials in Jenkins
     }
 
     stages {
         stage('Login to Docker Hub') {
             steps {
                 echo "Logging in to Docker Hub..."
-                powershell """
-                docker login -u ${DOCKER_HUB_CREDENTIALS_USR} -p ${DOCKER_HUB_CREDENTIALS_PSW}
-                """
+                withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    powershell """
+                    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+                    """
+                }
             }
         }
-
-        
 
         stage('Build and Push Backend Docker Image') {
             steps {
