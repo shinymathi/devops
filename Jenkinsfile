@@ -10,10 +10,19 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 echo "Logging in to Docker Hub..."
-                withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    powershell """
-                    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-                    """
+                script {
+                    try {
+                        withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                            echo "Attempting Docker login..."
+                            powershell """
+                            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+                            """
+                        }
+                    } catch (Exception e) {
+                        echo "Docker login failed: ${e.getMessage()}"
+                        currentBuild.result = 'FAILURE'  // Mark the build as failed
+                        throw e  // Re-throw the exception to stop further execution
+                    }
                 }
             }
         }
