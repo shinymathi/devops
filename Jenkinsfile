@@ -10,31 +10,51 @@ pipeline {
     stages {
         stage('Login to Docker Hub') {
             steps {
-                echo "Logging in to Docker Hub..."
-                powershell """
-                docker login -u ${DOCKER_HUB_CREDENTIALS_USR} -p ${DOCKER_HUB_CREDENTIALS_PSW}
-                """
+                script {
+                    try {
+                        echo "Logging in to Docker Hub..."
+                        powershell """
+                        docker login -u ${DOCKER_HUB_CREDENTIALS_USR} -p ${DOCKER_HUB_CREDENTIALS_PSW}
+                        """
+                    } catch (Exception e) {
+                        echo "Error during Docker Hub login: ${e.getMessage()}"
+                        error("Login to Docker Hub failed.")
+                    }
+                }
             }
         }
 
-
         stage('Build and Push Backend Docker Image') {
             steps {
-                echo "Building backend Docker image..."
-                powershell "docker build -t ${DOCKER_IMAGE_BACKEND}:${BUILD_NUMBER} ./backend"
-                
-                echo "Pushing backend Docker image to Docker Hub..."
-                powershell "docker push ${DOCKER_IMAGE_BACKEND}:${BUILD_NUMBER}"
+                script {
+                    try {
+                        echo "Building backend Docker image..."
+                        powershell "docker build -t ${DOCKER_IMAGE_BACKEND}:${BUILD_NUMBER} ./backend"
+                        
+                        echo "Pushing backend Docker image to Docker Hub..."
+                        powershell "docker push ${DOCKER_IMAGE_BACKEND}:${BUILD_NUMBER}"
+                    } catch (Exception e) {
+                        echo "Error during backend Docker image build or push: ${e.getMessage()}"
+                        error("Build and push of backend Docker image failed.")
+                    }
+                }
             }
         }
 
         stage('Build and Push Frontend Docker Image') {
             steps {
-                echo "Building frontend Docker image..."
-                powershell "docker build -t ${DOCKER_IMAGE_FRONTEND}:${BUILD_NUMBER} ./frontend"
-                
-                echo "Pushing frontend Docker image to Docker Hub..."
-                powershell "docker push ${DOCKER_IMAGE_FRONTEND}:${BUILD_NUMBER}"
+                script {
+                    try {
+                        echo "Building frontend Docker image..."
+                        powershell "docker build -t ${DOCKER_IMAGE_FRONTEND}:${BUILD_NUMBER} ./frontend"
+                        
+                        echo "Pushing frontend Docker image to Docker Hub..."
+                        powershell "docker push ${DOCKER_IMAGE_FRONTEND}:${BUILD_NUMBER}"
+                    } catch (Exception e) {
+                        echo "Error during frontend Docker image build or push: ${e.getMessage()}"
+                        error("Build and push of frontend Docker image failed.")
+                    }
+                }
             }
         }
     }
