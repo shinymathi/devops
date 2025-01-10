@@ -17,7 +17,6 @@ pipeline {
             }
         }
 
-        
 
         stage('Build and Push Backend Docker Image') {
             steps {
