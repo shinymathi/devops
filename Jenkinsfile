@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE_BACKEND = 'alaakhedhiri/backend'
         DOCKER_IMAGE_FRONTEND = 'alaakhedhiri/frontend'
-        DOCKER_HUB_CREDENTIALS = credentials('docker') // Reference your Docker Hub credentials in Jenkins
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub') // Reference your Docker Hub credentials in Jenkins
     }
 
     stages {
@@ -17,7 +17,6 @@ pipeline {
             }
         }
 
-        
 
         stage('Build and Push Backend Docker Image') {
             steps {
