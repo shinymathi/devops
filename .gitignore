@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+
+.codegpt
+=======
 # Logs
 logs
 *.log
@@ -22,3 +26,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+>>>>>>> cb3b8ac79d11702f411a9fcc9802c06874324d93
