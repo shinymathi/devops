@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE_BACKEND = 'alaakhedhiri/backend'
-        DOCKER_IMAGE_FRONTEND = 'alaakhedhiri/frontend'
+        DOCKER_IMAGE_BACKEND = 'alaakhedhiri/project-backend'
+        DOCKER_IMAGE_FRONTEND = 'alaakhedhiri/project-frontend'
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub') // Reference your Docker Hub credentials in Jenkins
     }
 

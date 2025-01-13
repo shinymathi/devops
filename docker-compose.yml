@@ -11,7 +11,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - MONGODB_URI=mongodb://mongodb:27017/book-library
+      - MONGODB_URL=mongodb://project-mongodb-1:27017/book-library
       - JWT_SECRET=your-secret-key
       - PORT=5000
     depends_on:
