@@ -32,7 +32,7 @@ Une application complète MERN (MongoDB, Express.js, React, Node.js) pour gérer
 
 ### 1. Cloner le dépôt
 
-```bash
+
 git clone <repository-url>
 cd project
 2. Backend
