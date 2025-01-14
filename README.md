@@ -158,12 +158,16 @@ project/
 └── Jenkinsfile
 ```
 API Endpoints
+```bash
 Authentification
 POST /api/auth/signup - Inscription utilisateur
 POST /api/auth/login - Connexion utilisateur
+```
 Livres (Routes protégées)
+```bash
 GET /api/books - Récupérer tous les livres
 GET /api/books/:id - Récupérer un livre spécifique
 POST /api/books - Ajouter un livre
 PATCH /api/books/:id - Mettre à jour un livre
 DELETE /api/books/:id - Supprimer un livre
+```
